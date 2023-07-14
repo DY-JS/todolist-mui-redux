@@ -54,12 +54,17 @@ export function Todolist(props: PropsType) {
         <ul>
             {
                 props.tasks.map(t => {
+                    console.log(t,"task")
+                    console.log(props,"props")
                     const onClickHandler = () => props.removeTask(t.id, props.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
                         props.changeTaskStatus(t.id, newIsDoneValue, props.id);
                     }
                     const onTitleChangeHandler = (newValue: string) => {
+                        console.log(t.id,"id")
+                        console.log(newValue,"newValue")
+                        console.log(props.id,"listId")
                         props.changeTaskTitle(t.id, newValue, props.id);
                     }
 
