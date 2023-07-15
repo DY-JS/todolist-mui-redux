@@ -19,7 +19,7 @@ import {
     setAllAC,
     setCompletedAC,
     changeListTitleAC,
-    createTodoListAC
+    createTodoListAC, deleteTodoListAC
 } from "./reducers/todoLists/todoListsActionCreators";
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -79,11 +79,11 @@ function App() {
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        console.log(todolistId, "TL")
         dispatch(changeTaskTitleAC(id, newTitle, todolistId))
     }
 
     function removeTodolist(id: string) {
+        dispatchLists(deleteTodoListAC(id))
     }
 
     function changeTodolistTitle(id: string, title: string) {
@@ -93,12 +93,6 @@ function App() {
 
     function addTodolist(title: string) {
         let newTodolistId = v4();
-        // let newTodolist: TodolistType = {id: newTodolistId, title: title, filter: 'all'};
-        // setTodolists([newTodolist, ...todolists]);
-        // setTasks({
-        //     ...tasks,
-        //     [newTodolistId]: []
-        // })
         dispatchLists(createTodoListAC(title, newTodolistId))
         dispatch(addEmptyTaskArrayAC(newTodolistId ))
     }

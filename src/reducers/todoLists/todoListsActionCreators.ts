@@ -5,12 +5,14 @@ export const ACTIVE = "ACTIVE"
 export const COMPLETED = "COMPLETED"
 export const CHANGE_TITLE = "CHANGE_TITLE"
 export const CREATE_TODOLIST = "CREATE_TODOLIST"
+export const DELETE_TODOLIST = "DELETE_TODOLIST"
 
 export type UnionTodoListACType = SetAllACType
     | SetActiveACType
     | SetCompletedACType
     | ChangeListTitleACType
     | CreateTodoListACType
+    | DeleteTodoListACType
 
 
 export type SetAllACType = ReturnType<typeof setAllAC>
@@ -49,11 +51,20 @@ export const changeListTitleAC = (listId: string, title: string ) => {
 }
 
 export type CreateTodoListACType = ReturnType<typeof createTodoListAC>
-export const createTodoListAC = (title: string, listId: string, ) => {
+export const createTodoListAC = (title: string, listId: string) => {
     return {
         type: CREATE_TODOLIST,
         payload: {listId, title}
-    }
+    } as const
+
+}
+
+export type DeleteTodoListACType = ReturnType<typeof deleteTodoListAC>
+export const deleteTodoListAC = (listId: string) => {
+    return {
+        type: DELETE_TODOLIST,
+        payload: {listId}
+    } as const
 
 }
 
