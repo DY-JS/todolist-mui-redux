@@ -48,6 +48,7 @@ export const todoListReducer = (state: TodolistType[], action: UnionTodoListACTy
                 title: action.payload.title,
                 filter: "all" as FilterValuesType
             }
+        return [newTodoList, ...state];
 
         case DELETE_TODOLIST:
             return state.filter(todolist => todolist.id !== action.payload.listId)
