@@ -19,7 +19,7 @@ import {
     setAllAC,
     setCompletedAC,
     changeListTitleAC,
-    createTodoListAC, deleteTodoListAC
+    createTodoListAC, deleteTodoListAC, setFilterAC
 } from "./reducers/todoLists/todoListsActionCreators";
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -67,11 +67,12 @@ function App() {
     }
 
     function changeFilter(filter: FilterValuesType, todolistId: string) {
-        switch(filter) {
-            case "all": return dispatchLists(setAllAC(filter, todolistId))
-            case "completed": return dispatchLists(setCompletedAC(filter, todolistId))
-            case "active": return dispatchLists(setActiveAC(filter, todolistId))
-        }
+        dispatchLists(setFilterAC(filter, todolistId))
+        // switch(filter) {
+        //     case "all": return dispatchLists(setAllAC(filter, todolistId))
+        //     case "completed": return dispatchLists(setCompletedAC(filter, todolistId))
+        //     case "active": return dispatchLists(setActiveAC(filter, todolistId))
+        // }
     }
 
     function changeStatus(id: string, isDone: boolean, todolistId: string) {

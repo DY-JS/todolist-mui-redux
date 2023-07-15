@@ -1,8 +1,6 @@
 import {
-    ACTIVE,
-    ALL,
+    SET_FILTER,
     CHANGE_TITLE,
-    COMPLETED,
     CREATE_TODOLIST,
     DELETE_TODOLIST,
     UnionTodoListACType
@@ -11,31 +9,12 @@ import {FilterValuesType, TodolistType} from "../../App";
 
 export const todoListReducer = (state: TodolistType[], action: UnionTodoListACType): TodolistType[] => {
     switch (action.type) {
-        // case ALL :
-        // case COMPLETED:
-        // case ACTIVE:
-        //     return state.map(todolist => todolist.id === action.payload.listId
-        //         ? { ...todolist, filter: action.payload.filter }
-        //         : todolist
-        //     );
-        case ALL:
-            return state.map((todolist) =>
-                todolist.id === action.payload.listId
-                    ? {...todolist, filter: "all"}
-                    : todolist
+        case SET_FILTER:
+            return state.map(todolist => todolist.id === action.payload.listId
+                ? {...todolist, filter: action.payload.filter}
+                : todolist
             );
-        case COMPLETED:
-            return state.map((todolist) =>
-                todolist.id === action.payload.listId
-                    ? {...todolist, filter: "completed"}
-                    : todolist
-            );
-        case ACTIVE:
-            return state.map((todolist) =>
-                todolist.id === action.payload.listId
-                    ? {...todolist, filter: "active"}
-                    : todolist
-            );
+
         case CHANGE_TITLE:
             return state.map(todolist => todolist.id === action.payload.listId
                 ? {...todolist, title: action.payload.title}
@@ -48,7 +27,7 @@ export const todoListReducer = (state: TodolistType[], action: UnionTodoListACTy
                 title: action.payload.title,
                 filter: "all" as FilterValuesType
             }
-        return [newTodoList, ...state];
+            return [newTodoList, ...state];
 
         case DELETE_TODOLIST:
             return state.filter(todolist => todolist.id !== action.payload.listId)

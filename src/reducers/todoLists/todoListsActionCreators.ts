@@ -1,42 +1,20 @@
 import {FilterValuesType} from "../../App";
 
-export const ALL = "ALL"
-export const ACTIVE = "ACTIVE"
-export const COMPLETED = "COMPLETED"
+export const SET_FILTER = "SET_FILTER"
 export const CHANGE_TITLE = "CHANGE_TITLE"
 export const CREATE_TODOLIST = "CREATE_TODOLIST"
 export const DELETE_TODOLIST = "DELETE_TODOLIST"
 
-export type UnionTodoListACType = SetAllACType
-    | SetActiveACType
-    | SetCompletedACType
+export type UnionTodoListACType =
+    |SetFilterACType
     | ChangeListTitleACType
     | CreateTodoListACType
     | DeleteTodoListACType
 
-
-export type SetAllACType = ReturnType<typeof setAllAC>
-export const setAllAC = (filter: FilterValuesType, listId: string ) => {
+export type SetFilterACType = ReturnType<typeof setFilterAC>
+export const setFilterAC = (filter: FilterValuesType, listId: string ) => {
     return {
-        type: ALL,
-        payload: { filter, listId }
-    } as const
-
-}
-
-export type SetActiveACType = ReturnType<typeof setActiveAC>
-export const setActiveAC = (filter: FilterValuesType, listId: string ) => {
-    return {
-        type: ACTIVE,
-        payload: { filter, listId }
-    } as const
-
-}
-
-export type SetCompletedACType = ReturnType<typeof setCompletedAC>
-export const setCompletedAC = (filter: FilterValuesType, listId: string ) => {
-    return {
-        type: COMPLETED,
+        type: SET_FILTER,
         payload: { filter, listId }
     } as const
 
