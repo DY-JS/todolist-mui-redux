@@ -1,5 +1,5 @@
 import {v4} from "uuid";
-import {TasksStateType} from "../../App";
+import {TasksStateType} from "../../../App";
 import {
     ADD_EMPTY_TASK_ARRAY,
     ADD_TASK,
@@ -8,9 +8,21 @@ import {
     REMOVE_TASK,
     UnionTasksACType
 } from "./tasksActionCreators";
+import {todolistId1, todolistId2} from "../todoLists/todoListReducer";
+
+const initialState: TasksStateType = {
+    [todolistId1]: [
+        {id: v4(), title: "HTML&CSS", isDone: true},
+        {id: v4(), title: "JS", isDone: true}
+    ],
+    [todolistId2]: [
+        {id: v4(), title: "Milk", isDone: true},
+        {id: v4(), title: "React Book", isDone: true}
+    ]
+}
 
 
-export const taskReducer = (state: TasksStateType, action: UnionTasksACType): TasksStateType => {
+export const taskReducer = (state: TasksStateType=initialState, action: UnionTasksACType): TasksStateType => {
     switch (action.type) {
         case REMOVE_TASK: {
             return {

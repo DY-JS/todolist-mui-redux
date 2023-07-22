@@ -1,6 +1,6 @@
 import {v4} from "uuid";
 
-import {TasksStateType} from "../../App";
+import {TasksStateType} from "../../../App";
 import {
     ADD_EMPTY_TASK_ARRAY,
     ADD_TASK,

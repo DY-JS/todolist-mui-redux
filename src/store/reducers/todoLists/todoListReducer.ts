@@ -5,9 +5,19 @@ import {
     DELETE_TODOLIST,
     UnionTodoListACType
 } from "./todoListsActionCreators";
-import {FilterValuesType, TodolistType} from "../../App";
+import {FilterValuesType, TodolistType} from "../../../App";
+import {v4} from "uuid";
 
-export const todoListReducer = (state: TodolistType[], action: UnionTodoListACType): TodolistType[] => {
+export const todolistId1 = v4();
+export const todolistId2 = v4();
+
+const initialState: TodolistType[] = [
+    {id: todolistId1, title: "What to learn", filter: "all"},
+    {id: todolistId2, title: "What to buy", filter: "all"}
+];
+
+export const todoListReducer = (state: TodolistType[] = initialState,
+                                action: UnionTodoListACType): TodolistType[] => {
     switch (action.type) {
         case SET_FILTER:
             return state.map(todolist => todolist.id === action.payload.listId

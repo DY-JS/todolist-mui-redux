@@ -1,4 +1,4 @@
-import {FilterValuesType, TodolistType} from "../../App";
+import {FilterValuesType, TodolistType} from "../../../App";
 import {v4} from "uuid";
 import {todoListReducer} from "./todoListReducer";
 import {

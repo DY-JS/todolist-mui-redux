@@ -1,4 +1,4 @@
-import {FilterValuesType} from "../../App";
+import {FilterValuesType} from "../../../App";
 
 export const SET_FILTER = "SET_FILTER"
 export const CHANGE_TITLE = "CHANGE_TITLE"
