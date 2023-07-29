@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v4} from 'uuid';
-import {AddItemForm} from './AddItemForm';
-import ButtonAppBar from "./ButtonAppBar";
+import {AddItemForm} from './components/AddItemForm';
+import ButtonAppBar from "./components/ButtonAppBar";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {addEmptyTaskArrayAC} from "./store/reducers/tasks/tasksActionCreators";
 import { createTodoListAC} from "./store/reducers/todoLists/todoListsActionCreators";
@@ -22,15 +22,16 @@ export type TasksStateType = {
 }
 
 function App() {
+    console.log('App')
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks);
     const todolists = useSelector<AppRootState, TodolistType[]>(state => state.todolists)
 
-    function addTodolist(title: string) {
+    const addTodolist=useCallback((title: string) => {
         let newTodolistId = v4();
         dispatch(createTodoListAC(title, newTodolistId))
         dispatch(addEmptyTaskArrayAC(newTodolistId))
-    }
+    },[dispatch])
 
     return (
         // <div className="App">
@@ -45,15 +46,7 @@ function App() {
                 <Grid container spacing={3}>
                     {
                         todolists.map(tl => {
-                            let tasksForTodolist = tasks[tl.id];
-
-                            if (tl.filter === "active") {
-                                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
-                            }
-                            if (tl.filter === "completed") {
-                                tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
-                            }
-
+                            let tasksForTodolist = tasks[tl.id]
                             return (
                                 <Grid key={tl.id} item>
                                     {/*<Paper elevation={3} - это карточка с тенью 3px*/}

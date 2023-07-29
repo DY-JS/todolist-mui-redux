@@ -11,20 +11,30 @@ import {
 } from "./tasksActionCreators";
 import {taskReducer} from "./taskReducer";
 
-test('correct task should be removed', () => {
-    let todolistId1 = v4()
-    let todolistId2 = v4()
+let todolistId1: string;
+let todolistId2: string;
+let startState: TasksStateType;
 
-    const startState: TasksStateType = {
-        [todolistId1]: [
-            {id: v4(), title: "HTML&CSS", isDone: true},
-            {id: v4(), title: "JS", isDone: true}
-        ],
-        [todolistId2]: [
-            {id: v4(), title: "Milk", isDone: true},
-            {id: v4(), title: "React Book", isDone: true}
-        ]
+//-- в beforeEach cоздание startState перед каждым тестом
+beforeEach(() => {
+    todolistId1 = v4()
+    todolistId2 = v4()
+
+   startState = {
+       [todolistId1]: [
+           {id: v4(), title: "HTML&CSS", isDone: true},
+           {id: v4(), title: "JS", isDone: true},
+           { id: v4(), title: "React", isDone: false }
+       ],
+       [todolistId2]: [
+           {id: v4(), title: "Milk", isDone: true},
+           {id: v4(), title: "React Book", isDone: true},
+           { id: v4(), title: "tea", isDone: false }
+       ]
     }
+})
+
+test('correct task should be removed', () => {
 
     const taskIdForRemove = startState[todolistId1][0].id
     const taskIdAfterRemoved = startState[todolistId1][1].id
@@ -39,27 +49,11 @@ test('correct task should be removed', () => {
 
     const endState = taskReducer(startState, action)
 
-    expect(endState[todolistId1].length).toBe(1)
+    expect(endState[todolistId1].length).toBe(2)
     expect(endState[todolistId1][0].id).toBe(taskIdAfterRemoved)
 })
 
 test('correct task should be added', () => {
-    let todolistId1 = v4()
-    let todolistId2 = v4()
-
-    const startState: TasksStateType = {
-        [todolistId1]: [
-            {id: v4(), title: "HTML&CSS", isDone: true},
-            {id: v4(), title: "JS", isDone: true},
-            { id: v4(), title: "React", isDone: false }
-        ],
-        [todolistId2]: [
-            {id: v4(), title: "Milk", isDone: true},
-            {id: v4(), title: "React Book", isDone: true},
-            { id: v4(), title: "tea", isDone: false }
-        ]
-    }
-
     let newTaskTitle = 'New Title'
 
     const endState = taskReducer(startState, {
@@ -79,20 +73,6 @@ test('correct task should be added', () => {
 })
 
 test('correct task should change its title', () => {
-    let todolistId1 = v4()
-    let todolistId2 = v4()
-
-    const startState: TasksStateType = {
-        [todolistId1]: [
-            {id: v4(), title: "HTML&CSS", isDone: true},
-            {id: v4(), title: "JS", isDone: true}
-        ],
-        [todolistId2]: [
-            {id: v4(), title: "Milk", isDone: true},
-            {id: v4(), title: "React Book", isDone: true}
-        ]
-    }
-
     let newTaskTitle = 'New Title'
     let taskId = startState[todolistId1][1].id
 
@@ -112,20 +92,6 @@ test('correct task should change its title', () => {
 })
 
 test('correct task should change its status', () => {
-    let todolistId1 = v4()
-    let todolistId2 = v4()
-
-    const startState: TasksStateType = {
-        [todolistId1]: [
-            {id: v4(), title: "HTML&CSS", isDone: true},
-            {id: v4(), title: "JS", isDone: true}
-        ],
-        [todolistId2]: [
-            {id: v4(), title: "Milk", isDone: true},
-            {id: v4(), title: "React Book", isDone: true}
-        ]
-    }
-
     let newTaskStatus = false
     let taskId = startState[todolistId1][1].id
 
@@ -146,17 +112,7 @@ test('correct task should change its status', () => {
 })
 
 test('correctly add empty array of tasks  to todolist', () => {
-    let todolistId1 = v4()
-    let todolistId2 = v4()
-
-    const startState: TasksStateType = {
-        [todolistId1]: [
-            {id: v4(), title: "HTML&CSS", isDone: true},
-            {id: v4(), title: "JS", isDone: true}
-        ]
-    }
-
-    const action: UnionTasksACType = {
+       const action: UnionTasksACType = {
         type: ADD_EMPTY_TASK_ARRAY,
         payload: {
             listId: todolistId2,
